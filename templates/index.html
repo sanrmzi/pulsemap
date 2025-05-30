@@ -206,21 +206,31 @@
   </div>
 </div>
 <div id="container">
-  <aside id="sidebar">
+  <aside id="sidebar-categories">
     <h2>Categories</h2>
-    <form id="catForm">
+    <div id="catButtons">
       {% for cat in categories %}
-      <input type="checkbox" id="cat-{{ loop.index }}" name="cat" value="{{ cat }}" checked>
-      <label for="cat-{{ loop.index }}">{{ cat }}</label><br>
+        <button type="button" class="cat-btn selected" data-cat="{{ cat }}">{{ cat }}</button>
       {% endfor %}
-    </form>
+    </div>
   </aside>
   <main id="mapBox">
     <div id="map"></div>
   </main>
-  <aside id="eventList">
+  <aside id="sidebar-events">
     <h2>Latest Events</h2>
-    <ul id="events"></ul>
+    <ul id="events">
+      {% for event in events[:10] %}
+      <li data-category="{{ event.category }}">
+        <strong>{{ event.title }}</strong><br>
+        <span>
+          {{ event.description[:80].split('\n')[0] }}<br>
+          {{ event.description[80:160].split('\n')[0] }}
+          {% if event.description|length > 160 %}<br><em>Read more...</em>{% endif %}
+        </span>
+      </li>
+      {% endfor %}
+    </ul>
   </aside>
 </div>
 {% endblock %}

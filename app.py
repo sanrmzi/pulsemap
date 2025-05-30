@@ -29,7 +29,9 @@ class Event(db.Model):
 def index():
     cats = Category.query.all()
     categories = [c.name for c in cats]
-    return render_template("index.html", categories=categories)
+    # Get the latest 10 events, newest first
+    events = Event.query.order_by(Event.created_at.desc()).limit(10).all()
+    return render_template("index.html", categories=categories, events=events)
 
 SUPER_PASSWORD = "davinci"
 
@@ -158,6 +160,28 @@ def get_events():
             for e in events
         ]
     })
+
+
+@app.route('/get_categories')
+def get_categories():
+    cats = Category.query.all()
+    color_map = {
+        "Politics": "#4E2E0E",  # dark brown
+        "Health": "#e74c3c",
+        "Sports": "#2980b9",
+        "Technology": "#16a085",
+        "Culture": "#8e44ad",
+        "Entertainment": "#f39c12",
+        "Finance": "#27ae60"
+    }
+    categories = [
+        {
+            "name": c.name,
+            "color": color_map.get(c.name, "#7f8c8d")
+        }
+        for c in cats
+    ]
+    return jsonify(categories=categories)
 
 
 if __name__ == "__main__":
