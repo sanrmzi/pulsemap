@@ -25,45 +25,6 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     category = db.relationship("Category", backref=db.backref("events", lazy=True))
 
-
-# with app.app_context():
-#    db.create_all()
-#    if not Category.query.first():
-#        names = [
-#            "Politics",
-#            "Disasters",
-#            "Health",
-#            "Sports",
-#            "Technology",
-#            "Entertainment",
-#        ]
-#        for n in names:
-#            db.session.add(Category(name=n))
-#        db.session.commit()
-#    if not Event.query.first():
-#        # sample events
-#        tech = Category.query.filter_by(name="Technology").first().id
-#        sport = Category.query.filter_by(name="Sports").first().id
-#        e1 = Event(
-#            title="AI Summit",
-#            description="Global AI conference",
-#            latitude=37.7749,
-#            longitude=-122.4194,
-#            category_id=tech,
-#            country_code="US",
-#        )
-#        e2 = Event(
-#            title="Championship Game",
-#            description="Final match",
-#            latitude=51.5074,
-#            longitude=-0.1278,
-#            category_id=sport,
-#            country_code="GB",
-#        )
-#        db.session.add_all([e1, e2])
-#        db.session.commit()
-
-
 @app.route("/")
 def index():
     cats = Category.query.all()
