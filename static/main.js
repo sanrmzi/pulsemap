@@ -167,9 +167,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById('countrySelect').addEventListener('change', e => {
     currentCountry = e.target.value;
-    const centers = { US: [38, -97], GB: [54, -2], DE: [51, 10], IN: [20, 77] };
-    if (currentCountry && centers[currentCountry]) map.setView(centers[currentCountry], 5);
-    else map.setView([20, 0], 2);
+
+    // Add more country centers as needed
+    const centers = {
+      US: [38, -97], GB: [54, -2], DE: [51, 10], IN: [20, 77], FR: [46.6, 2.5], 
+      IT: [42.8, 12.8], ES: [40.4, -3.7], RU: [61, 99], CN: [35.8, 104.2],
+      BR: [-14, -51], AU: [-25, 134], CA: [56, -106], JP: [36, 138], 
+      // Add more as needed
+    };
+
+    // Default zoom level for countries
+    const zooms = {
+      US: 5, RU: 3, CA: 4, AU: 4, CN: 4, BR: 4, IN: 5, JP: 5, DE: 6, FR: 6, IT: 6, ES: 6, GB: 6
+      // Add more as needed
+    };
+
+    if (currentCountry && centers[currentCountry]) {
+      map.setView(centers[currentCountry], zooms[currentCountry] || 5, { animate: true });
+    } else {
+      map.setView([20, 0], 2, { animate: true });
+    }
+
     loadEvents(currentCountry);
   });
 
