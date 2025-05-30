@@ -1,9 +1,6 @@
 app = "pulsemap"
 
-primary_region = "ams"  # Change to your preferred Fly.io region (e.g. "ams", "lhr", "iad", etc.)
-
-[build]
-  image = "python:3.12-slim"
+primary_region = "ams"
 
 [env]
   PORT = "8080"
